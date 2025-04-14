@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guarde essa Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffd6e0 0%, #ffecd2 100%);
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        .card {
+            width: 80%;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid rgba(255, 182, 193, 0.4);
+            border-radius: 30px;
+            z-index: -1;
+            animation: pulse 4s infinite;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #d85a7f;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .date {
+            font-size: 1.8rem;
+            color: #e77c8d;
+            margin-bottom: 20px;
+            font-weight: 300;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .location {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .heart {
+            font-size: 2rem;
+            color: #d85a7f;
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+            margin: 20px 0;
+        }
+
+        .counter {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #d85a7f;
+            margin-top: 20px;
+            animation: fadeIn 3s ease-out;
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-hearts span {
+            position: absolute;
+            color: rgba(255, 182, 193, 0.6);
+            font-size: 1.5rem;
+            animation: float 6s linear infinite;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-accept {
+            background-color: #d85a7f;
+            color: white;
+            box-shadow: 0 4px 15px rgba(216, 90, 127, 0.3);
+        }
+
+        .btn-accept:hover {
+            background-color: #c04a6f;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(216, 90, 127, 0.4);
+        }
+
+        .btn-deny {
+            background-color: #f0f0f0;
+            color: #666;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.1s ease;
+        }
+
+        .btn-deny:hover {
+            background-color: #e0e0e0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.02); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 0.4; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                width: 90%;
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .date {
+                font-size: 1.5rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Já coloca na agenda Clarinha</h1>
+        
+        <div class="date">Sexta</div>
+        
+        <div class="location">19h</div>
+        
+        <div class="heart">❤</div>
+        
+        <div class="buttons">
+            <button class="btn btn-accept" id="acceptBtn">Aceito ❤</button>
+            <button class="btn btn-deny" id="denyBtn">Não</button>
+        </div>
+        
+        
+        <div class="floating-hearts" id="hearts-container"></div>
+    </div>
+
+    <script>
+        // Cria corações flutuantes
+        const container = document.getElementById('hearts-container');
+        const heartCount = 15;
+        
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('span');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 1 + 1) + 'rem';
+            container.appendChild(heart);
+        }
+
+        // Comportamento do botão "Não"
+        const denyBtn = document.getElementById('denyBtn');
+        
+        denyBtn.addEventListener('mouseover', function() {
+            // Move o botão para uma posição aleatória quando o mouse se aproxima
+            const card = this.closest('.card');
+            const cardRect = card.getBoundingClientRect();
+            const btnRect = this.getBoundingClientRect();
+            
+            const maxX = cardRect.width - btnRect.width;
+            const maxY = cardRect.height - btnRect.height;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            this.style.position = 'absolute';
+            this.style.left = randomX + 'px';
+            this.style.top = randomY + 'px';
+        });
+
+        denyBtn.addEventListener('click', function() {
+            // Se mesmo assim conseguir clicar (em mobile por exemplo)
+            alert('Ops! Tente novamente... ou melhor, clique no "Aceito" ❤');
+            this.style.position = 'absolute';
+            this.style.left = Math.random() * 80 + '%';
+            this.style.top = Math.random() * 80 + '%';
+        });
+
+        // Comportamento do botão "Aceito" - Redireciona para WhatsApp
+        const acceptBtn = document.getElementById('acceptBtn');
+        
+        acceptBtn.addEventListener('click', function() {
+            const phoneNumber = '5511988082811'; 
+            
+            // Mensagem que será pré-preenchida
+            const message = ' sexta às 19h! ❤';
+            
+            // Codifica a mensagem para URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Cria o link do WhatsApp (corrigido)
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            // Redireciona para o WhatsApp
+            window.open(whatsappUrl, '_blank');
+        });
+    </script>
+</body>
+</html>
